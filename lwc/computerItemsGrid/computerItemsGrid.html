@@ -1,0 +1,58 @@
+<template>
+    <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="width:100%">
+        <thead>
+            <tr class="slds-line-height_reset">
+                <th scope="col" style="width:50%"> Active </th>
+                <th scope="col" style="width:50%"> Deleted </th>
+            </tr>
+        </thead>
+        <tbody>
+            <template for:each={resultArray} for:item="result" for:index="parentindex">
+                <tr class="slds-hint-parent" key={result.type}>
+                    <th scope="row">
+                        <b>{result.type} ({result.active.length})</b>
+                        <template for:each={result.active} for:item="item" for:index="childindex">
+                            <div  key={item.id} class="slds-box slds-grid" style="position:relative">
+                                <div key={item.id}>
+                                    <p key={item.id}>Brand : {item.brand}</p>
+                                    <p key={item.id}>Model : {item.model}</p>
+                                    <p key={item.id}>Price : {item.price}</p>
+                                </div>
+                                <lightning-button-icon style="right: 20px;position: absolute;top: 35px;" key={item.id} variant="bare" size="medium" icon-name="action:delete" alternative-text="opne" onclick={handleRemove} data-parentindex={parentindex} data-childindex={childindex}></lightning-button-icon>
+                            </div>
+                        </template>
+                    </th>
+                    <th scope="row">
+                        <b>{result.type} ({result.deleted.length})</b>
+                        <template for:each={result.deleted} for:item="item" for:index="childindex">
+                            <div  key={item.id} class="slds-box slds-grid" style="position:relative">
+                                <div key={item.id}>
+                                    <p key={item.id}>Brand : {item.brand}</p>
+                                    <p key={item.id}>Model : {item.model}</p>
+                                    <p key={item.id}>Price : {item.price}</p>
+                                </div>
+                                <lightning-button-icon style="right: 20px;position: absolute;top: 35px;" key={item.id} variant="bare" size="medium" icon-name="action:recall" alternative-text="opne" onclick={handleRestore} data-parentindex={parentindex} data-childindex={childindex}></lightning-button-icon>
+                            </div>
+                        </template>
+                    </th>
+                </tr>
+                <tr class="slds-hint-parent" key={result.type}>
+                    <th scope="row">
+                        <b>Subtotal : {result.activeSubTotal}</b>
+                    </th>
+                    <th scope="row">
+                        <b>Subtotal : {result.deletedSubTotal}</b>
+                    </th>
+                </tr>
+            </template>
+            <tr class="slds-hint-parent">
+                    <th scope="row">
+                        <b>Total : {activeTotal}</b>
+                    </th>
+                    <th scope="row">
+                        <b>Total : {deletedTotal}</b>
+                    </th>
+                </tr>
+        </tbody>
+    </table>
+</template>
